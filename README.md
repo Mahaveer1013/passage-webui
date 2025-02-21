@@ -1,4 +1,4 @@
-# gopass-webui
+# passage-webui
 webui for gopass
 
 	The project is handled using `uv`
@@ -7,6 +7,9 @@ webui for gopass
 ```
 uv run fastapi dev main.py
 ```
+
+## Built on the top of
+- [Passage](https://github.com/FiloSottile/passage)
 
 ## Reference blog, link for the projects
 - How to send html file from fast api
