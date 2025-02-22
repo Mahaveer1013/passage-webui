@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Passage Vault</title>
+	<link href="{{ url_for('assets', path='/style.css') }}" rel="stylesheet">
+	<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script>
+	 function copyToClipboard(ele) {
+             var copyText = document.getElementById(ele);
+
+             // Create a range and select the text content
+             var range = document.createRange();
+             range.selectNode(copyText);
+             window.getSelection().removeAllRanges(); // Clear any previous selections
+             window.getSelection().addRange(range); // Select the new range
+
+             // Copy the text
+             try {
+                 var successful = document.execCommand('copy');
+                 if (successful) {
+                     alert("Text copied to clipboard: " + copyText.textContent);
+                 } else {
+                     alert("Failed to copy text.");
+                 }
+             } catch (err) {
+                 alert("Error copying text: " + err);
+             }
+
+             // Clear the selection after copying
+             window.getSelection().removeAllRanges();
+         }
+	</script>
+    </head>
+    <body>
+	<div class="sidebar">
+	    <ul>
+		<a href="/">
+		    <li class="selected"> <i class="fa fa-house"></i> Home</li>
+		</a>
+		<a href="/new">
+		    <li> <i class="fa-solid fa-plus"></i> New</li>
+		</a>
+		<a href="/user">
+		    <li> <i class="fa fa-user"></i> User</li>
+		</a>
+		<li> <i class="fa fa-right-from-bracket"></i> Logout</li>
+	    </ul>
+	</div>
+	<div class="content">
+	    <input type="text" class="search-bar" placeholder="Search...">
+	    <table class="password-table">
+		<tr>
+		    <th>Name</th>
+		    <th>Password</th>
+		    <th>Actions</th>
+		</tr>
+		{% for folder, details in file_data.items() %}
+		{% if details.files %}
+		<tr>
+		    <td class="folder">
+			{{ folder }}
+			<i class="fa fa-turn-down space-before"></i>
+		    </td>
+		</tr>
+		{% for file in details.files %}
+                <tr>
+                    <td>
+			<span id="file-{{ details.id }}-{{ file.id }}">{{ file.name }}</span>
+			<span hx-on:click="copyToClipboard('file-{{ details.id }}-{{ file.id }}')"><i class="fa fa-copy space-before"></i></span>
+		    </td>
+		    <td>
+			<span id="pass-{{ details.id }}-{{ file.id }}">
+			    **********************
+			    <i hx-get="/testing"
+			       hx-vals='{"folder_name": "{{ folder }}", "file_name": "{{ file.name }}", "folder_id": {{ details.id }} , "file_id": {{ file.id }} }'
+			       hx-target="#pass-{{ details.id }}-{{ file.id }}"
+			       class="fa fa-eye space-before"></i>
+			    <i class="fa fa-copy space-before"></i>
+			</span>
+		    </td>
+		    <td>
+			<!--i class="fa fa-pen space-after"></i-->
+			<i hx-get="/delete"
+			       hx-vals='{"folder_name": "{{ folder }}", "file_name": "{{ file.name }}", "folder_id": {{ details.id }} , "file_id": {{ file.id }} }'
+			       hx-target=".password-table"
+			       class="fa fa-trash space-before"></i>
+		    </td>
+                </tr>
+		{% endfor %}
+		{% endif %}
+		{% endfor %}
+	    </table>
+	</div>
+    </body>
+</html>

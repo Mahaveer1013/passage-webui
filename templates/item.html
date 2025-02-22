@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>Item Details</title>
+    <link href="{{ url_for('assets', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1><a href="/new">Item ID: {{ id }}</a></h1>
+</body>
+</html>
+<button onclick="copyToClipboard('file-{{file}}')">
+  
+<span hx-on="click: copyToClipboard('file-{{file}}')"><i class="fa fa-copy space-before"></i></span>
+  
+</button>
