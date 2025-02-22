@@ -56,3 +56,9 @@ th, td {
 th {
     background: #e4d1b9;
 }
+tr td:first-child:not(.folder) {
+    padding-left: 25px;
+}
+td.folder {
+    color: brown;
+}
