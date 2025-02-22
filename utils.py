@@ -1,6 +1,7 @@
 import os
 import uuid
 import json
+import subprocess
 
 def walk_directory(base_dir):
     # This will hold the final directory structure in the desired format
@@ -32,7 +33,7 @@ def walk_directory(base_dir):
         for file in files:
             file_details.append({
                 "id": str(file_no),
-                "name": file
+                "name": file[:-4]
             })
             file_no = file_no + 1
         
@@ -45,3 +46,14 @@ def walk_directory(base_dir):
         folder_no = folder_no + 1
 
     return directory_structure
+
+
+def passage_execute(commands):
+    result = subprocess.run(commands, capture_output=True, text=True)
+    if (result.returncode != 0 or result.stderr):
+        return null
+    else:
+        return result.stdout.strip()
+
+def passage_exitstatus(commands):
+    return subprocess.call(commands)

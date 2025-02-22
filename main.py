@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel
 
-from utils import walk_directory
+from utils import walk_directory, passage_execute, passage_exitstatus
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets",html = True), name="assets")
@@ -30,16 +30,17 @@ async def read_index():
 async def read_index():
     return FileResponse('assets/user.html')
 
-@app.get("/testing", response_class=HTMLResponse)
+@app.get("/passshow", response_class=HTMLResponse)
 async def root(request: Request,folder_name: str, file_name: str, folder_id: str, file_id: str):
+    pass_path=folder_name.replace(" > ", "/")+"/"+file_name
+    password = passage_execute(["passage",pass_path])
     return templates.TemplateResponse(
         request=request,
         name="password-show.html",
-        context={"folder_name":folder_name, "file_name": file_name, "folder_id": folder_id, "file_id": file_id, "password": "Hello world"}
+        context={"folder_name":folder_name, "file_name": file_name, "folder_id": folder_id, "file_id": file_id, "password": password}
     )
 
-
-@app.get("/testing1", response_class=HTMLResponse)
+@app.get("/passhide", response_class=HTMLResponse)
 async def root(request: Request,folder_name: str, file_name: str, folder_id: str, file_id: str):
     return templates.TemplateResponse(
         request=request,
@@ -49,8 +50,19 @@ async def root(request: Request,folder_name: str, file_name: str, folder_id: str
 
 @app.get("/delete")
 async def read_index(request: Request,folder_name: str, file_name: str, folder_id: str, file_id: str):
+    pass_path=folder_name.replace(" > ", "/")+"/"+file_name
+    password = passage_exitstatus(["passage","rm","-f",pass_path]) # force password delete
     directory = "/home/goldayan/.passage/store"
     file_data = walk_directory(directory)
+    return templates.TemplateResponse(
+        request=request, name="password-table.html", context={"file_data":file_data}
+    )
+
+@app.get("/search")
+async def read_index(request: Request,search: str):
+    directory = "/home/goldayan/.passage/store"
+    file_data = walk_directory(directory)
+    del file_data['personal']
     return templates.TemplateResponse(
         request=request, name="password-table.html", context={"file_data":file_data}
     )

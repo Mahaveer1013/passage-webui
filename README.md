@@ -40,6 +40,11 @@ Error: password store is empty.
 The generated password for personal/helloking@gmail.com is:
 DpW)wr2'Y63jL[!7PM)<wVBXL
 ```
+- Install the passage
+```
+sudo make install
+```
+- Once installed you can access the passage using passage command
 ## Run the project in debug mode
 ```
 uv run fastapi dev main.py

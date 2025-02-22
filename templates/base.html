@@ -50,7 +50,13 @@
 	    </ul>
 	</div>
 	<div class="content">
-	    <input type="text" class="search-bar" placeholder="Search...">
+	  <input type="search"
+		 name="search"
+		 class="search-bar"
+		 placeholder="Type text and press enter..."
+		 hx-get="/search"
+		 hx-trigger="input changed delay:500ms, keyup[key=='Enter'], load"
+		 hx-target=".password-table">
 	    <table class="password-table">
 		<tr>
 		    <th>Name</th>
@@ -74,11 +80,11 @@
 		    <td>
 			<span id="pass-{{ details.id }}-{{ file.id }}">
 			    **********************
-			    <i hx-get="/testing"
+			    <i hx-get="/passshow"
 			       hx-vals='{"folder_name": "{{ folder }}", "file_name": "{{ file.name }}", "folder_id": {{ details.id }} , "file_id": {{ file.id }} }'
 			       hx-target="#pass-{{ details.id }}-{{ file.id }}"
 			       class="fa fa-eye space-before"></i>
-			    <i class="fa fa-copy space-before"></i>
+			    <span hx-on:click="copyToClipboard('pass-{{ details.id }}-{{ file.id }}')"><i class="fa fa-copy space-before"></i></span>
 			</span>
 		    </td>
 		    <td>
