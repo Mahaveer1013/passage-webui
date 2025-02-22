@@ -17,9 +17,13 @@ body {
 .sidebar ul li {
     padding: 10px;
     margin: 10px 0;
-    cursor: pointer;
+
     background: #d2bba7;
     border-radius: 5px;
+}
+.sidebar ul li.selected {
+    background: #9b8470;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul li::before, .sidebar ul li i::after {
@@ -35,6 +39,7 @@ body {
 .content {
     flex: 1;
     padding: 20px;
+    
 }
 .search-bar {
     width: 70%;
@@ -43,7 +48,7 @@ body {
     border-radius: 5px;
 }
 table {
-    width: 90%;
+    width: 80%;
     margin-top: 20px;
     border-collapse: collapse;
     background: white;
@@ -61,4 +66,67 @@ tr td:first-child:not(.folder) {
 }
 td.folder {
     color: brown;
+}
+
+.container {
+    margin: 0px auto;
+    padding: 20px;
+    border-radius: 10px;
+    
+    width: 35vw;
+    text-align: center;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+}
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.btn-group {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+button {
+    flex: 1;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5a3d2b; /* Brown button */
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4a2e1f;
+}
+
+
+
+/* a tag default behavior override */
+a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
+}
+
+a:hover {
+    text-decoration: none; /* Remove underline on hover */
+    color: inherit; /* Keep the same color on hover */
+}
+
+a:visited {
+    color: inherit; /* Keep the same color for visited links */
+}
+
+a:active {
+    color: inherit; /* Keep the same color for active links */
 }

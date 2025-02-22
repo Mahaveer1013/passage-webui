@@ -1,20 +1,47 @@
 import os
+import uuid
+import json
 
-def walk_directory(directory):
-    result = {}
+def walk_directory(base_dir):
+    # This will hold the final directory structure in the desired format
+    directory_structure = {}
+    folder_no = 1
 
-    for root, dirs, files in os.walk(directory):
-        # Generate the folder path
-        folder_path = os.path.relpath(root, directory)
+    # Walk through the directory tree
+    for root, dirs, files in os.walk(base_dir):
+        # Skip empty directories
+        if not files:
+            continue
         
-        # If the folder is at the root level, its relative path will be just the folder name, not 'folder > subfolder'
+        # Generate a unique ID for the folder
+        folder_id = str(folder_no)
+
+        # Get the relative folder path from the base directory
+        folder_path = os.path.relpath(root, base_dir)
+        
+        # If the directory is the root directory, just add the folder name
         if folder_path == ".":
-            folder_path = "_root"
+            folder_path = "folder"
+        
+        # Format the key as "folder > subfolder"
+        folder_key = folder_path.replace(os.sep, ' > ')
 
-        # Clean up the folder path to match the required format
-        folder_key = folder_path.replace(os.sep, " > ")
+        # Prepare the list of files in the folder
+        file_details = []
+        file_no = 1
+        for file in files:
+            file_details.append({
+                "id": str(file_no),
+                "name": file
+            })
+            file_no = file_no + 1
+        
+        # Store the folder's id and list of files
+        directory_structure[folder_key] = {
+            "id": folder_id,
+            "files": file_details
+        }
 
-        # Assign the list of files to the folder key
-        result[folder_key] = files
+        folder_no = folder_no + 1
 
-    return result
+    return directory_structure

@@ -34,7 +34,12 @@ Error: password store is empty.
 ```
 ./password-store.sh personal/helloking@gmail.com
 ```
-
+- Adding a account with random password
+```
+./password-store.sh generate personal/helloking@gmail.com
+The generated password for personal/helloking@gmail.com is:
+DpW)wr2'Y63jL[!7PM)<wVBXL
+```
 ## Run the project in debug mode
 ```
 uv run fastapi dev main.py
