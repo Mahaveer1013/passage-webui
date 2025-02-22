@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel
 
-from utils import walk_directory, passage_execute, passage_exitstatus
+from utils import walk_directory, passage_execute, passage_exitstatus, search_directory
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets",html = True), name="assets")
@@ -61,8 +61,7 @@ async def read_index(request: Request,folder_name: str, file_name: str, folder_i
 @app.get("/search")
 async def read_index(request: Request,search: str):
     directory = "/home/goldayan/.passage/store"
-    file_data = walk_directory(directory)
-    del file_data['personal']
+    file_data = search_directory(directory, search)
     return templates.TemplateResponse(
         request=request, name="password-table.html", context={"file_data":file_data}
     )

@@ -42,14 +42,14 @@ body {
     
 }
 .search-bar {
-    width: 70%;
+    width: 50vw;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 table {
-    width: 80%;
-    margin-top: 20px;
+    width: 70vw;
     border-collapse: collapse;
     background: white;
 }
