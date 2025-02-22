@@ -6,15 +6,29 @@
     <title>My Website</title>
     <!--link rel="icon" href="./favicon.ico" type="image/x-icon"-->
     <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script>htmx.logAll();</script>
   </head>
   <body>
-    <main>
-      <h1 class="hello">Welcome to My Website</h1>
-       <button hx-get="/sample" hx-swap="outerHTML">
-	 Click Me
-       </button>
+      <main>
+	  <div class="sidebar-root">
+	      <div class="sidebar-items">
+		  <div class="sidebar-item selected">
+		      <i class="fa fa-lock"></i>
+		  </div>
+		  <div class="sidebar-item">
+		      <i class="fa fa-user"></i>
+		  </div>
+		  <div class="sidebar-item last">
+		      <i class="fa fa-right-from-bracket"></i>
+		  </div>
+	      </div>
+	  </div>
+	  <div class="content-root">
+	      <h1 class="hello">Welcome to My Password manager hackathon server</h1>
+	      <button hx-get="/sample" hx-swap="outerHTML">Click Me</button>
+	  </div>
     </main>
   </body>
 </html>

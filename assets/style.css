@@ -1,3 +1,45 @@
 .hello {
     background-color: red;
 }
+
+body {
+    background: #F2E6D9;
+}
+
+main {
+    display: flex;
+}
+
+main > .sidebar-root {
+    width: 120px;
+    height: 90vh;
+    background: #F8F5F2;
+    border-radius: 60px;
+    margin: 20px;
+}
+
+main > .sidebar-root > .sidebar-items {
+    display: flex;
+    flex-direction: column;
+    margin: 33px;
+}
+
+main > .sidebar-root > .sidebar-items > .sidebar-item.selected {
+    background: #F2E6D9;
+}
+
+main > .sidebar-root > .sidebar-items > .sidebar-item {
+    width: 50px;
+    height: 50px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+main > .sidebar-root > .sidebar-items > .sidebar-item.last {
+    margin-top: auto;
+}
+
+main > .sidebar-root > .sidebar-items > .sidebar-item > i {
+    font-size: 35px;
+    margin-top: 8px;
+}
