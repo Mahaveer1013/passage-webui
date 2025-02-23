@@ -56,6 +56,13 @@ uv run fastapi dev main.py
 - FastAPI
 - FontAwesome
 
+## Screenshots
+
+![Homepage](./image/image1.png)
+![NewPassword](./image/image2.png)
+![Settings](./image/image3.png)
+![Homepage2](./image/image4.png)
+
 ## Reference blog, link for the projects
 - How to send html file from fast api
   - https://stackoverflow.com/questions/65916537/a-minimal-fastapi-example-loading-index-html
