@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Install 'age' from its official GitHub release
-RUN apt install age
+RUN apt-get install age
 
 # Generate key pairs for 'age'
 RUN mkdir $HOME/.passage \
@@ -32,12 +32,22 @@ WORKDIR /app/passage
 # Install 'passage' using Make
 RUN make install
 
+# Write some dummy passwords
+RUN passage generate personal/demo/demo1@gmail.com
+RUN passage generate personal/demo/demo2@gmail.com
+RUN passage generate personal/demo/demo3@gmail.com
+RUN passage generate work/workdemo1@gmail.com
+RUN passage generate work/workdemo2@gmail.com
+
 # Clone the GitHub repository for the web UI
 WORKDIR /app
 RUN git clone https://github.com/ThangaAyyanar/passage-webui
 
 # Set the working directory to the 'passage-webui' directory
 WORKDIR /app/passage-webui
+
+# Ensure poetry is available globally
+RUN ln -s /root/.local/bin/poetry /usr/local/bin/poetry
 
 # Install Python dependencies for the web UI using Poetry
 RUN poetry install
