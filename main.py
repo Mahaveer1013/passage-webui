@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse,FileResponse
 from fastapi.templating import Jinja2Templates
+import os
 
 from pydantic import BaseModel
 
@@ -12,9 +13,13 @@ app.mount("/assets", StaticFiles(directory="assets",html = True), name="assets")
 
 templates = Jinja2Templates(directory="templates")
 
+def getStorePath():
+    return os.path.join(os.environ.get("HOME"), ".passage", "store")
+
 @app.get("/")
 async def read_index(request: Request):
-    directory = "/home/goldayan/.passage/store"
+    directory = getStorePath()  # Construct the full path
+    # directory = "/home/ubuntu/.passage/store"
     file_data = walk_directory(directory)
     return templates.TemplateResponse(
         request=request, name="base.html", context={"file_data":file_data}
@@ -52,7 +57,7 @@ async def root(request: Request,folder_name: str, file_name: str, folder_id: str
 async def read_index(request: Request,folder_name: str, file_name: str, folder_id: str, file_id: str):
     pass_path=folder_name.replace(" > ", "/")+"/"+file_name
     password = passage_exitstatus(["passage","rm","-f",pass_path]) # force password delete
-    directory = "/home/goldayan/.passage/store"
+    directory = getStorePath()
     file_data = walk_directory(directory)
     return templates.TemplateResponse(
         request=request, name="password-table.html", context={"file_data":file_data}
@@ -60,7 +65,7 @@ async def read_index(request: Request,folder_name: str, file_name: str, folder_i
 
 @app.get("/search")
 async def search_items(request: Request,search: str):
-    directory = "/home/goldayan/.passage/store"
+    directory = getStorePath()
     file_data = search_directory(directory, search)
     return templates.TemplateResponse(
         request=request, name="password-table.html", context={"file_data":file_data}
