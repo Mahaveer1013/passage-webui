@@ -77,6 +77,15 @@ td.folder {
     text-align: center;
 }
 
+#pass-response {
+    margin: 0px auto;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 35vw;
+    text-align: center;
+}
+
 label {
     display: block;
     text-align: left;

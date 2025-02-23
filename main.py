@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse,FileResponse
 from fastapi.templating import Jinja2Templates
@@ -59,10 +59,22 @@ async def read_index(request: Request,folder_name: str, file_name: str, folder_i
     )
 
 @app.get("/search")
-async def read_index(request: Request,search: str):
+async def search_items(request: Request,search: str):
     directory = "/home/goldayan/.passage/store"
     file_data = search_directory(directory, search)
     return templates.TemplateResponse(
         request=request, name="password-table.html", context={"file_data":file_data}
     )
+
+
+@app.post("/new_password")
+async def search_items(request: Request,path: str = Form(...),username: str = Form(...), password: str = Form(...), notes: str = Form(...)):
+    print(path)
+    print(username)
+    print(password)
+    print(notes)
+    if username and password:
+      return HTMLResponse(content=f"<div>Password saved for, {username}</div>", status_code=200)
+    else:
+      return HTMLResponse(content="<div>Missing username or password</div>", status_code=400)  # 400 Bad Request
 
