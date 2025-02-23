@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel
 
-from utils import walk_directory, passage_execute, passage_exitstatus, search_directory
+from utils import walk_directory, passage_execute, passage_exitstatus, search_directory, passage_new
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets",html = True), name="assets")
@@ -26,7 +26,7 @@ async def read_index(request: Request):
 async def read_index():
     return FileResponse('assets/new-password.html')
 
-@app.get("/user")
+@app.get("/settings")
 async def read_index():
     return FileResponse('assets/user.html')
 
@@ -69,12 +69,10 @@ async def search_items(request: Request,search: str):
 
 @app.post("/new_password")
 async def search_items(request: Request,path: str = Form(...),username: str = Form(...), password: str = Form(...), notes: str = Form(...)):
-    print(path)
-    print(username)
-    print(password)
-    print(notes)
-    if username and password:
-      return HTMLResponse(content=f"<div>Password saved for, {username}</div>", status_code=200)
+    if path and username and password:
+        newpath = path+"/"+username
+        passage_new(password, newpath)
+        return HTMLResponse(content=f"<div>Password saved for, {newpath}</div>", status_code=200)
     else:
-      return HTMLResponse(content="<div>Missing username or password</div>", status_code=400)  # 400 Bad Request
+        return HTMLResponse(content="<div>Missing username or password</div>", status_code=400)  # 400 Bad Request
 

@@ -108,3 +108,31 @@ def passage_execute(commands):
 
 def passage_exitstatus(commands):
     return subprocess.call(commands)
+
+def passage_new(password, path):
+    try:
+        # Create a pipe from echo to passage insert
+        echo_process = subprocess.Popen(
+            ["echo", password], 
+            stdout=subprocess.PIPE  # Send output to pipe
+        )
+
+        # Pass the output of echo to passage insert
+        passage_process = subprocess.Popen(
+            ["passage", "insert", "-e", path],
+            stdin=echo_process.stdout,  # Receive input from the echo command's stdout
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        # Wait for the command to finish and capture the output and error
+        output, error = passage_process.communicate()
+
+        # Check if there is any error
+        if error:
+            print(f"Error occurred: {error.decode()}")
+        else:
+            print(f"Output: {output.decode()}")
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")

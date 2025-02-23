@@ -48,10 +48,16 @@ body {
     border-radius: 5px;
     margin-bottom: 20px;
 }
-table {
+table:not(.settings-table) {
     width: 70vw;
     border-collapse: collapse;
     background: white;
+}
+.settings-table {
+    width: 100%;
+}
+.settings-table tr td:first-child {
+    font-weight: bold;
 }
 th, td {
     border-bottom: 1px solid #ddd;
