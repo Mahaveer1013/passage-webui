@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passage Vault</title>
+    <link rel="stylesheet" href="/assets/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  </head>
+  <body>
+    <div class="sidebar">
+      <ul>
+	<a href="/">
+	  <li> <i class="fa fa-house"></i> Home</li>
+	</a>
+	<a href="/new">
+	    <li> <i class="fa-solid fa-plus"></i> New</li>
+	</a>
+	<a href="/settings">
+		    <li> <i class="fa fa-screwdriver-wrench"></i> Settings</li>
+		</a>
+        <!--li> <i class="fa fa-right-from-bracket"></i> Logout</li-->
+      </ul>
+    </div>
+    <div class="content">
+      <div class="container">
+        <h2>Passage settings</h2>
+
+	<table class="settings-table">
+	    <tr>
+		<td>Hostname</td>
+		<td>ayan-pc</td>
+	    </tr>
+	    <tr>
+		<td>Passage store</td>
+		<td>$HOME/.passage/store</td>
+	    </tr>
+	    <tr>
+		<td>Age path</td>
+		<td>/usr/bin/age</td>
+	    </tr>
+	    
+	</table>
+	
+        <div class="btn-group">
+          <button onclick="savePassword()">Sync Password</button>
+          <button onclick="viewPassword()">Refresh info</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
