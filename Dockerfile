@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && apt-get clean
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# Install uv
+RUN pip3 install uv
 
 # Install 'age' from its official GitHub release
 RUN apt-get install age
@@ -38,6 +38,7 @@ RUN passage generate personal/demo/demo2@gmail.com
 RUN passage generate personal/demo/demo3@gmail.com
 RUN passage generate work/workdemo1@gmail.com
 RUN passage generate work/workdemo2@gmail.com
+RUN passage generate work/workdemo3@gmail.com
 
 # Clone the GitHub repository for the web UI
 WORKDIR /app
@@ -46,14 +47,8 @@ RUN git clone https://github.com/ThangaAyyanar/passage-webui
 # Set the working directory to the 'passage-webui' directory
 WORKDIR /app/passage-webui
 
-# Ensure poetry is available globally
-RUN ln -s /root/.local/bin/poetry /usr/local/bin/poetry
-
-# Install Python dependencies for the web UI using Poetry
-RUN poetry install
-
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Command to run the FastAPI app using Uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# run the fast api server
+CMD ["uv", "run", "fastapi", "run", "main.py"]
